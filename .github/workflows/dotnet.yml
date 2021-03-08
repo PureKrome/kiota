@@ -41,7 +41,7 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: coverage
-    - run: ls -Recurse -Filter coverage
+    - run: Get-ChildItem -Recurse -Filter coverage
       shell: pwsh
     - name: Get branch name
       run: |
