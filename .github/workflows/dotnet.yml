@@ -48,7 +48,7 @@ jobs:
       shell: pwsh
     - run: |
         $content = Get-Content -Path .\reports\coverage\index.html -Raw
-        $content -matches "<tr><th>Branch coverage:<\/th><td>([\d.]+)%"
+        $content -match "<tr><th>Branch coverage:<\/th><td>([\d.]+)%"
         $cov = [float]::Parse($matches[1])
         if($cov > 80) {
           $color = "green"
