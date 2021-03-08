@@ -41,6 +41,8 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: coverage
+    - run: ls -Recurse -Filter coverage
+      shell: pwsh
     - name: Get branch name
       run: |
         $branchName = $Env:GITHUB_REF.replace("refs/heads/", "")
@@ -59,6 +61,7 @@ jobs:
         }
         $url = "https://img.shields.io/badge/coverage-$cov%25-$color"
         Invoke-WebRequest -Uri $url -OutFile coverage.svg
+        echo "COVERAGE=${cov}" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
       shell: pwsh
     - name: push
       uses: github-actions-x/commit@v2.7
@@ -70,4 +73,11 @@ jobs:
         files: coverage.svg
         name: Microsoft Graph DevX Tooling
         email: GraphTooling@service.microsoft.com
+    - uses: LouisBrunner/checks-action@v1.1.1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        name: Coverage
+        conclusion: success
+        output: |
+          {"summary": "coverage: ${{ env.COVERAGE }} "}
     
