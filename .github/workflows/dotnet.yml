@@ -47,7 +47,7 @@ jobs:
         echo "CURRENT_BRANCH=${branchName}" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
       shell: pwsh
     - run: |
-        $content = Get-Content -Path .\reports\coverage\index.html -Raw
+        $content = Get-Content -Path .\coverage\index.html -Raw
         $content -match "<tr><th>Branch coverage:<\/th><td>([\d.]+)%"
         $cov = [float]::Parse($matches[1])
         if($cov > 80) {
